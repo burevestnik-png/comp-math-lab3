@@ -3,12 +3,12 @@ import 'package:flutter/cupertino.dart';
 enum ScreenState { IDLE, WAITING }
 
 class IState with ChangeNotifier {
-  ScreenState _state = ScreenState.IDLE;
+  ScreenState _status = ScreenState.IDLE;
 
-  ScreenState get state => _state;
+  ScreenState get state => _status;
 
   void setState(ScreenState state) {
-    _state = state;
+    _status = state;
     notifyListeners();
   }
 }
