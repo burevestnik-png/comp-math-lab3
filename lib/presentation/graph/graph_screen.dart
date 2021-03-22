@@ -20,8 +20,13 @@ class GraphScreen extends StatelessWidget {
               title: Text(state.equation.toString()),
             ),
             body: Center(
-              child: LineChart(
-                lineChartData,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  LineChart(
+                    lineChartData,
+                  ),
+                ],
               ),
             ),
           );

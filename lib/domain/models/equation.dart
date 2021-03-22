@@ -1,7 +1,9 @@
 import 'package:comp_math_lab3/domain/models/tokens/token.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class Equation {
   final List<Token> _tokens;
+
   Equation(List<Token> _tokens) : _tokens = _tokens;
 
   double compute(double x) {
@@ -11,6 +13,37 @@ class Equation {
     });
     return result;
   }
+
+  FlSpot min(
+    double from,
+    double to, [
+    double accuracy = 0.01,
+  ]) {
+    FlSpot minDot = FlSpot(0, double.infinity);
+    for (var i = from; i <= to; i += accuracy) {
+      if (minDot.y > compute(i)) {
+        minDot = FlSpot(i, _toFixed(compute(i)));
+      }
+    }
+    return minDot;
+  }
+
+  FlSpot max(
+    double from,
+    double to, [
+    double accuracy = 0.01,
+  ]) {
+    FlSpot maxDot = FlSpot(0, double.negativeInfinity);
+    for (var i = from; i <= to; i += accuracy) {
+      if (maxDot.y < compute(i)) {
+        maxDot = FlSpot(i, _toFixed(compute(i)));
+      }
+    }
+    return maxDot;
+  }
+
+  double _toFixed(double value, [int digits = 2]) =>
+      double.parse(value.toStringAsFixed(digits));
 
   @override
   String toString() {

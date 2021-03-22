@@ -3,6 +3,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class DrawingService {
+  static const kCenterConst = 3;
+
   LineChartData drawAxis({
     double minX = -10.0,
     double maxX = 10.0,
@@ -34,10 +36,26 @@ class DrawingService {
     double max = 10.0,
     double accuracy = 0.01,
   }) {
+    if ((equation.min(min, max).y - data.minY).abs() > kCenterConst) {
+      var previousMinY = data.minY;
+      data.minY = equation.min(min, max).y - kCenterConst;
+      data.maxY = data.maxY - previousMinY;
+
+      List<FlSpot> newYAxisDots = [];
+      for (var i = data.minY; i <= data.maxY; i++) {
+        newYAxisDots.add(FlSpot(0, i));
+      }
+      data.lineBarsData[1].spots.clear();
+      data.lineBarsData[1].spots.addAll(newYAxisDots);
+    }
+
     List<FlSpot> dots = [];
     for (var i = min; i < max; i += accuracy) {
-      dots.add(FlSpot(i, equation.compute(i)));
+      if (equation.compute(i) < data.maxY && equation.compute(i) > data.minY) {
+        dots.add(FlSpot(i, equation.compute(i)));
+      }
     }
+
     data.lineBarsData.add(LineChartBarData(
       spots: dots,
       isCurved: true,
