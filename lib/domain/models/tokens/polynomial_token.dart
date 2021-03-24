@@ -7,13 +7,18 @@ class PolynomialToken extends Token {
   final Token _token;
   final double _power;
 
-  PolynomialToken(this._token, this._power, Sign sign, double factor)
-      : super(sign, factor);
+  PolynomialToken(this._token, this._power, String sign, double factor)
+      : super(Sign(sign), factor);
 
-  PolynomialToken.basic({
+  PolynomialToken.basicPositive({
     required double power,
     required double factor,
-  }) : this(LinearToken.basic(), power, Sign("+"), factor);
+  }) : this(LinearToken.basic(), power, Sign.plus, factor);
+
+  PolynomialToken.basicNegative({
+    required double power,
+    required double factor,
+  }) : this(LinearToken.basic(), power, Sign.minus, factor);
 
   @override
   double compute(double x) =>

@@ -13,11 +13,11 @@ class GraphScreen extends StatelessWidget {
       child: Consumer<GraphScreenState>(
         builder: (context, state, _) {
           var lineChartData = state.drawService.drawAxis();
-          state.drawService.drawGraph(state.equation, lineChartData);
+          state.drawService.drawGraph(state.equation2, lineChartData);
 
           return Scaffold(
             appBar: AppBar(
-              title: Text(state.equation.toString()),
+              title: Text(state.equation2.toString()),
             ),
             body: Center(
               child: Column(
@@ -26,6 +26,13 @@ class GraphScreen extends StatelessWidget {
                   LineChart(
                     lineChartData,
                   ),
+                  FlatButton(
+                    onPressed: () {
+                      state.drawService
+                          .drawGraph(state.equation, lineChartData);
+                    },
+                    child: Text("test"),
+                  )
                 ],
               ),
             ),

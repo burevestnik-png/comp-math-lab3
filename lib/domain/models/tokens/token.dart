@@ -11,15 +11,18 @@ abstract class Token {
 }
 
 class Sign {
+  static const plus = "+";
+  static const minus = "-";
+
   final String _sign;
 
   Sign(this._sign);
 
   double apply(double value) {
     switch (_sign) {
-      case "+":
+      case plus:
         return value;
-      case "-":
+      case minus:
         return -1 * value;
       default:
         throw "Unimplemented sign: $_sign";
