@@ -1,14 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 
 enum ScreenState { IDLE, WAITING }
 
-class IState with ChangeNotifier {
-  ScreenState _status = ScreenState.IDLE;
+class IState extends GetxController {
+  var _status = ScreenState.IDLE.obs;
 
-  ScreenState get state => _status;
+  ScreenState? get state => _status.value;
 
-  void setState(ScreenState state) {
-    _status = state;
-    notifyListeners();
-  }
+  void setState(ScreenState state) => _status.value = state;
 }

@@ -5,7 +5,7 @@ import 'package:comp_math_lab3/domain/models/tokens/token.dart';
 import 'package:comp_math_lab3/domain/services/drawing_service.dart';
 import 'package:comp_math_lab3/domain/state/state.dart';
 
-class GraphScreenState extends IState {
+class MainScreenState extends IState {
   final equation = Equation(<Token>[
     PolynomialToken.basicPositive(power: 2.0, factor: 1.0),
   ]);
