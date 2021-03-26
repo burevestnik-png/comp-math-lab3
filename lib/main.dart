@@ -1,3 +1,4 @@
+import 'package:comp_math_lab3/domain/state/main_screen_state.dart';
 import 'package:comp_math_lab3/presentation/graph/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,8 +14,13 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MainScreen(),
-      getPages: [GetPage(name: MainScreen.id, page: () => MainScreen())],
+      initialRoute: MainScreen.id,
+      initialBinding: BindingsBuilder(() {
+        Get.put(MainScreenState());
+      }),
+      getPages: [
+        GetPage(name: MainScreen.id, page: () => MainScreen()),
+      ],
     );
   }
 }
