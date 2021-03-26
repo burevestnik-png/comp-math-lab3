@@ -4,6 +4,7 @@ import 'package:comp_math_lab3/domain/models/tokens/polynomial_token.dart';
 import 'package:comp_math_lab3/domain/models/tokens/token.dart';
 import 'package:comp_math_lab3/domain/services/drawing_service.dart';
 import 'package:comp_math_lab3/domain/state/state.dart';
+import 'package:get/get.dart';
 
 class MainScreenState extends IState {
   final equation = Equation(<Token>[
@@ -17,4 +18,7 @@ class MainScreenState extends IState {
   ]);
 
   final drawService = DrawingService();
+
+  var dropDownValue = "One".obs;
+  void onDropDownValueChange(String value) => dropDownValue.value = value;
 }
