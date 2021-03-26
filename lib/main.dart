@@ -1,4 +1,4 @@
-import 'package:comp_math_lab3/presentation/graph/graph_screen.dart';
+import 'package:comp_math_lab3/presentation/graph/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,7 +13,8 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: GraphScreen(),
+      home: MainScreen(),
+      getPages: [GetPage(name: MainScreen.id, page: () => MainScreen())],
     );
   }
 }
