@@ -20,7 +20,7 @@ class MainScreenState extends IState {
     ]),
   ];
 
-  late var currentEquation;
+  late Rx<Equation> currentEquation;
 
   @override
   void onInit() {
