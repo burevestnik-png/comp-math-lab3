@@ -1,3 +1,4 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:comp_math_lab3/domain/state/main_screen_state.dart';
 import 'package:comp_math_lab3/presentation/main_screen.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +11,13 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Lab work',
       theme: ThemeData.light(),
-      initialRoute: MainScreen.id,
+      home: AnimatedSplashScreen(
+        nextScreen: MainScreen(),
+        splash: 'images/yarki.png',
+        splashTransition: SplashTransition.fadeTransition,
+      ),
       initialBinding: BindingsBuilder(() {
         Get.put(MainScreenState());
       }),
