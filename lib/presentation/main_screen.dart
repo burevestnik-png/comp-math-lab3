@@ -23,6 +23,10 @@ class MainScreen extends GetView<MainScreenState> {
             alignment: WrapAlignment.start,
             children: [Options()],
           ),
+          const VerticalDivider(
+            thickness: 1,
+            width: 1,
+          ),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
