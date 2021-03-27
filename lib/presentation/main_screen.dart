@@ -14,7 +14,7 @@ class MainScreen extends GetView<MainScreenState> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("bar"),
+        title: Text("Integral computation application"),
       ),
       body: Row(
         children: [

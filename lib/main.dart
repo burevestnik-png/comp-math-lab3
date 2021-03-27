@@ -16,6 +16,7 @@ class App extends StatelessWidget {
       home: AnimatedSplashScreen(
         nextScreen: MainScreen(),
         splash: 'images/yarki.png',
+        duration: 500,
         splashTransition: SplashTransition.fadeTransition,
       ),
       initialBinding: BindingsBuilder(() {
