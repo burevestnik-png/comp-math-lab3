@@ -17,27 +17,29 @@ class MainScreen extends GetView<MainScreenState> {
         title: Text("bar"),
       ),
       body: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          OptionsWidget(),
-          SizedBox(
-            width: 40,
+          Wrap(
+            direction: Axis.vertical,
+            alignment: WrapAlignment.start,
+            children: [Options()],
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              LineChart(
-                lineChartData,
-              ),
-              FlatButton(
-                onPressed: () {
-                  controller.drawService
-                      .drawGraph(controller.equations[0], lineChartData);
-                },
-                child:
-                    Obx(() => Text("${controller.currentEquation.toString()}")),
-              )
-            ],
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                LineChart(
+                  lineChartData,
+                ),
+                FlatButton(
+                  onPressed: () {
+                    controller.drawService
+                        .drawGraph(controller.equations[0], lineChartData);
+                  },
+                  child: Obx(
+                      () => Text("${controller.currentEquation.toString()}")),
+                )
+              ],
+            ),
           ),
         ],
       ),

@@ -1,53 +1,15 @@
-import 'package:comp_math_lab3/domain/models/equation.dart';
-import 'package:comp_math_lab3/domain/state/main_screen_state.dart';
+import 'package:comp_math_lab3/presentation/widgets/equations_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
-/// Закостылено в [StatefulWidget], так как флаттер не может перерендрить
-/// [DropdownButton], если меняется obs переменная в контроллере от GetX
-class OptionsWidget extends StatefulWidget {
-  @override
-  _OptionsWidgetState createState() => _OptionsWidgetState();
-}
-
-class _OptionsWidgetState extends State<OptionsWidget> {
-  late var _currentCrutchedEquation;
-  final MainScreenState state = Get.find();
-
-  @override
-  void initState() {
-    super.initState();
-    _currentCrutchedEquation = state.currentEquation.value;
-  }
-
-  List<DropdownMenuItem<Equation>> buildDropDownMenuItems(
-      List<Equation> equations) {
-    return equations.map<DropdownMenuItem<Equation>>((Equation equation) {
-      return DropdownMenuItem(
-        child: Text(equation.toString()),
-        value: equation,
-      );
-    }).toList();
-  }
-
+class Options extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<Equation>(
-      value: _currentCrutchedEquation,
-      icon: const Icon(Icons.arrow_downward),
-      iconSize: 24,
-      elevation: 16,
-      underline: Container(
-        height: 2,
-        color: Colors.blue,
-      ),
-      onChanged: (Equation? newValue) {
-        state.onDropDownValueChange(newValue!);
-        setState(() {
-          _currentCrutchedEquation = newValue;
-        });
-      },
-      items: buildDropDownMenuItems(state.equations),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text("Choose equation:"),
+        Equations(),
+      ],
     );
   }
 }
