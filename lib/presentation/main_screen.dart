@@ -32,9 +32,10 @@ class MainScreen extends GetView<MainScreenState> {
               FlatButton(
                 onPressed: () {
                   controller.drawService
-                      .drawGraph(controller.equation, lineChartData);
+                      .drawGraph(controller.equations[0], lineChartData);
                 },
-                child: Text("test"),
+                child:
+                    Obx(() => Text("${controller.currentEquation.toString()}")),
               )
             ],
           ),
