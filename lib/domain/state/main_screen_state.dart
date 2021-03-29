@@ -23,6 +23,7 @@ class MainScreenState extends IState {
   late Rx<Equation> currentEquation;
   var a = (-5.0).obs;
   var b = 5.0.obs;
+  var accuracy = 0.01.obs;
 
   @override
   void onInit() {
@@ -35,4 +36,6 @@ class MainScreenState extends IState {
   void onAChange(double value) => a.value = value;
 
   void onBChange(double value) => b.value = value;
+
+  void onAccuracyChange(double value) => accuracy.value = value;
 }
