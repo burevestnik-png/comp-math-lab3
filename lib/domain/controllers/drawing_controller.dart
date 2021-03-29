@@ -1,9 +1,29 @@
 import 'package:comp_math_lab3/domain/models/equation.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class DrawingService {
+/// [
+///   axisX
+///   axisY
+///   currentEquation
+/// ]
+class DrawingController extends GetxController {
   static const kCenterConst = 3;
+
+  static const _kAxisXPlace = 0;
+  static const _kAxisYPlace = 1;
+  static const _kEquationPlace = 2;
+
+  late final LineChartData chartData;
+  late final List<LineChartBarData> _lines;
+
+  @override
+  void onInit() {
+    super.onInit();
+    _lines = _drawAxis(-10, 10, -10, 10);
+    chartData = drawAxis();
+  }
 
   LineChartData drawAxis({
     double minX = -10.0,
@@ -11,6 +31,9 @@ class DrawingService {
     double minY = -10.0,
     double maxY = 10.0,
   }) {
+    _lines.clear();
+    _lines.addAll(_drawAxis(minX, maxX, minY, maxY));
+
     return LineChartData(
       gridData: _drawGrid(),
       maxX: maxX,
@@ -23,40 +46,40 @@ class DrawingService {
         bottomTitles: _drawTitles(),
         leftTitles: _drawTitles(),
       ),
-      lineBarsData: [
-        ..._drawAxis(minX, maxX, minY, maxY),
-      ],
+      lineBarsData: _lines,
     );
   }
 
   void drawGraph(
-    Equation equation,
-    LineChartData data, {
+    Equation equation, {
     double min = -10.0,
     double max = 10.0,
     double accuracy = 0.01,
   }) {
-    if ((equation.min(min, max).y - data.minY).abs() > kCenterConst) {
-      var previousMinY = data.minY;
-      data.minY = equation.min(min, max).y - kCenterConst;
-      data.maxY = data.maxY - previousMinY;
+    if (_lines.asMap().containsKey(_kEquationPlace)) _lines.removeLast();
+
+    if ((equation.min(min, max).y - chartData.minY).abs() > kCenterConst) {
+      var previousMinY = chartData.minY;
+      chartData.minY = equation.min(min, max).y - kCenterConst;
+      chartData.maxY = chartData.maxY - previousMinY;
 
       List<FlSpot> newYAxisDots = [];
-      for (var i = data.minY; i <= data.maxY; i++) {
+      for (var i = chartData.minY; i <= chartData.maxY; i++) {
         newYAxisDots.add(FlSpot(0, i));
       }
-      data.lineBarsData[1].spots.clear();
-      data.lineBarsData[1].spots.addAll(newYAxisDots);
+      chartData.lineBarsData[1].spots.clear();
+      chartData.lineBarsData[1].spots.addAll(newYAxisDots);
     }
 
     List<FlSpot> dots = [];
     for (var i = min; i < max; i += accuracy) {
-      if (equation.compute(i) < data.maxY && equation.compute(i) > data.minY) {
+      if (equation.compute(i) < chartData.maxY &&
+          equation.compute(i) > chartData.minY) {
         dots.add(FlSpot(i, equation.compute(i)));
       }
     }
 
-    data.lineBarsData.add(LineChartBarData(
+    _lines.add(LineChartBarData(
       spots: dots,
       isCurved: true,
       dotData: FlDotData(
@@ -71,9 +94,9 @@ class DrawingService {
     double minY,
     double maxY,
   ) =>
-      [..._drawAxisX(minX, maxX), ..._drawAxisY(minY, maxY)];
+      [_drawAxisX(minX, maxX), _drawAxisY(minY, maxY)];
 
-  List<LineChartBarData> _drawAxisY(
+  LineChartBarData _drawAxisY(
     double minY,
     double maxY,
   ) {
@@ -82,19 +105,17 @@ class DrawingService {
       dots.add(FlSpot(0, i));
     }
 
-    return [
-      LineChartBarData(
-        spots: dots,
-        colors: [Colors.black],
-        barWidth: 3,
-        dotData: FlDotData(
-          show: false,
-        ),
+    return LineChartBarData(
+      spots: dots,
+      colors: [Colors.black],
+      barWidth: 3,
+      dotData: FlDotData(
+        show: false,
       ),
-    ];
+    );
   }
 
-  List<LineChartBarData> _drawAxisX(
+  LineChartBarData _drawAxisX(
     double minX,
     double maxX,
   ) {
@@ -103,16 +124,14 @@ class DrawingService {
       dots.add(FlSpot(i, 0));
     }
 
-    return [
-      LineChartBarData(
-        spots: dots,
-        colors: [Colors.black],
-        barWidth: 3,
-        dotData: FlDotData(
-          show: false,
-        ),
+    return LineChartBarData(
+      spots: dots,
+      colors: [Colors.black],
+      barWidth: 3,
+      dotData: FlDotData(
+        show: false,
       ),
-    ];
+    );
   }
 
   SideTitles _drawTitles() => SideTitles(
