@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 
 class OptionTextfield extends StatelessWidget {
   final String content;
-  final String initialValue;
+  final TextEditingController controller;
   final void Function(String)? onChange;
 
   OptionTextfield({
     required this.content,
     required this.onChange,
-    this.initialValue = "",
+    required this.controller,
   });
 
   @override
@@ -23,7 +23,7 @@ class OptionTextfield extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: TextField(
               onChanged: onChange,
-              controller: TextEditingController(text: initialValue),
+              controller: controller,
             ),
           ),
         ),
