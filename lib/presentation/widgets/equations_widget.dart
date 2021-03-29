@@ -1,5 +1,6 @@
 import 'package:comp_math_lab3/domain/models/equation.dart';
 import 'package:comp_math_lab3/domain/state/main_screen_state.dart';
+import 'package:comp_math_lab3/presentation/styles/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -32,22 +33,29 @@ class _EquationsState extends State<Equations> {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<Equation>(
-      value: _currentCrutchedEquation,
-      icon: const Icon(Icons.arrow_downward),
-      iconSize: 24,
-      elevation: 16,
-      underline: Container(
-        height: 2,
-        color: Colors.blue,
-      ),
-      onChanged: (Equation? newValue) {
-        state.onDropDownValueChange(newValue!);
-        setState(() {
-          _currentCrutchedEquation = newValue;
-        });
-      },
-      items: buildDropDownMenuItems(state.equations),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        fieldText("Choose equation:"),
+        SizedBox(height: 5),
+        DropdownButton<Equation>(
+          value: _currentCrutchedEquation,
+          isExpanded: true,
+          icon: const Icon(Icons.arrow_downward),
+          iconSize: 24,
+          underline: Container(
+            height: 2,
+            color: Colors.blue,
+          ),
+          onChanged: (Equation? newValue) {
+            state.onEquationChange(newValue!);
+            setState(() {
+              _currentCrutchedEquation = newValue;
+            });
+          },
+          items: buildDropDownMenuItems(state.equations),
+        ),
+      ],
     );
   }
 }

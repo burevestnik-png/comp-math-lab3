@@ -21,6 +21,8 @@ class MainScreenState extends IState {
   ];
 
   late Rx<Equation> currentEquation;
+  var a = (-5.0).obs;
+  var b = 5.0.obs;
 
   @override
   void onInit() {
@@ -28,5 +30,9 @@ class MainScreenState extends IState {
     currentEquation = equations[0].obs;
   }
 
-  void onDropDownValueChange(Equation value) => currentEquation.value = value;
+  void onEquationChange(Equation value) => currentEquation.value = value;
+
+  void onAChange(double value) => a.value = value;
+
+  void onBChange(double value) => b.value = value;
 }

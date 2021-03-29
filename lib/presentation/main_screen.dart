@@ -18,16 +18,16 @@ class MainScreen extends GetView<MainScreenState> {
       ),
       body: Row(
         children: [
-          Wrap(
-            direction: Axis.vertical,
-            alignment: WrapAlignment.start,
-            children: [Options()],
+          Expanded(
+            flex: 4,
+            child: Options(),
           ),
           const VerticalDivider(
             thickness: 1,
             width: 1,
           ),
           Expanded(
+            flex: 7,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
