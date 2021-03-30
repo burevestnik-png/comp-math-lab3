@@ -30,8 +30,6 @@ class MainScreenState extends IState {
   final bController = TextEditingController();
   final accuracyController = TextEditingController();
 
-  late final Map<RxDouble, TextEditingController> doubleFields;
-
   @override
   void onInit() {
     super.onInit();
@@ -41,12 +39,6 @@ class MainScreenState extends IState {
     bController.text = b.value.toString();
     accuracyController.text = accuracy.value.toString();
 
-    doubleFields = {
-      a: aController,
-      b: bController,
-      accuracy: accuracyController,
-    };
-
     _redraw();
   }
 
@@ -54,6 +46,7 @@ class MainScreenState extends IState {
     String value, {
     required bool Function(double) isCorrect,
     required RxDouble obs,
+    required TextEditingController textController,
   }) {
     var parsedValue = double.tryParse(value);
     if (parsedValue == null) {
@@ -63,7 +56,7 @@ class MainScreenState extends IState {
 
     if (!isCorrect(parsedValue)) {
       // TODO need test
-      doubleFields[obs]!.text = obs.value.toString();
+      textController.text = obs.value.toString();
       return;
     }
 
@@ -72,7 +65,9 @@ class MainScreenState extends IState {
   }
 
   bool isACorrect(double value) => value < b.value!;
+
   bool isBCorrect(double value) => value > a.value!;
+
   bool isAccuracyCorrect(double value) => value >= 0.01 && value <= 1;
 
   void onEquationChange(Equation value) {

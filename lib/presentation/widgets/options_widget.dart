@@ -21,6 +21,7 @@ class Options extends GetView<MainScreenState> {
               value,
               isCorrect: controller.isACorrect,
               obs: controller.a,
+              textController: controller.aController,
             ),
           ),
           OptionTextfield(
