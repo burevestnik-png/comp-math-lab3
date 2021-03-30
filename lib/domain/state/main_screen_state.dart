@@ -35,8 +35,8 @@ class MainScreenState extends IState {
     super.onInit();
 
     currentEquation = equations[0].obs;
-    aController.text = a.value.toString();
-    bController.text = b.value.toString();
+    aController.text = a.value!.toStringAsFixed(0);
+    bController.text = b.value!.toStringAsFixed(0);
     accuracyController.text = accuracy.value.toString();
 
     _redraw();
@@ -55,12 +55,12 @@ class MainScreenState extends IState {
     }
 
     if (!isCorrect(parsedValue)) {
-      // TODO need test
       textController.text = obs.value.toString();
       return;
     }
 
     obs.value = parsedValue;
+    print('Redraw: a - ${a.value} b - ${b.value}');
     _redraw();
   }
 
@@ -72,37 +72,6 @@ class MainScreenState extends IState {
 
   void onEquationChange(Equation value) {
     currentEquation.value = value;
-    _redraw();
-  }
-
-  void onAChange(double value) {
-    if (value >= b.value!) {
-      aController.text = a.value.toString();
-      return;
-    }
-
-    a.value = value;
-    _redraw();
-  }
-
-  void onBChange(double value) {
-    if (value <= a.value!) {
-      bController.text = b.value.toString();
-      return;
-    }
-
-    b.value = value;
-    _redraw();
-  }
-
-  void onAccuracyChange(double value) {
-    if (value < 0.01 || value > 1) {
-      accuracyController.text = accuracy.value.toString();
-      return;
-    }
-
-    accuracy.value = double.tryParse(value.toStringAsFixed(3));
-    accuracyController.text = accuracy.value.toString();
     _redraw();
   }
 

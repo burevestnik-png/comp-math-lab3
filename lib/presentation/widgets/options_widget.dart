@@ -27,14 +27,22 @@ class Options extends GetView<MainScreenState> {
           OptionTextfield(
             content: "Right border:",
             controller: controller.bController,
-            onChange: (String value) =>
-                controller.onBChange(double.tryParse(value)!),
+            onChange: (String value) => controller.onFieldChange(
+              value,
+              isCorrect: controller.isBCorrect,
+              obs: controller.b,
+              textController: controller.bController,
+            ),
           ),
           OptionTextfield(
             content: "Accuracy:",
             controller: controller.accuracyController,
-            onChange: (String value) =>
-                controller.onAccuracyChange(double.tryParse(value)!),
+            onChange: (String value) => controller.onFieldChange(
+              value,
+              isCorrect: controller.isAccuracyCorrect,
+              obs: controller.accuracy,
+              textController: controller.accuracyController,
+            ),
           ),
         ],
       ),

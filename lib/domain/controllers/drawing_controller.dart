@@ -9,37 +9,32 @@ import 'package:get/get.dart';
 ///   currentEquation
 /// ]
 class DrawingController extends GetxController {
-  static const kCenterConst = 3;
+  static const _kPaddingValue = 5;
+  static const _kDefaultMax = 50.0;
+  static const _kDefaultMin = -50.0;
 
   static const _kAxisXPlace = 0;
   static const _kAxisYPlace = 1;
   static const _kEquationPlace = 2;
 
   late final LineChartData chartData;
-  late final List<LineChartBarData> _lines;
+  late final List<LineChartBarData> _lines = [];
 
   @override
   void onInit() {
     super.onInit();
-    _lines = _drawAxis(-10, 10, -10, 10);
-    chartData = drawAxis();
+    chartData = init();
+    _drawAxisX();
+    _drawAxisY();
   }
 
-  LineChartData drawAxis({
-    double minX = -10.0,
-    double maxX = 10.0,
-    double minY = -10.0,
-    double maxY = 10.0,
-  }) {
-    _lines.clear();
-    _lines.addAll(_drawAxis(minX, maxX, minY, maxY));
-
+  LineChartData init() {
     return LineChartData(
       gridData: _drawGrid(),
-      maxX: maxX,
-      maxY: maxY,
-      minX: minX,
-      minY: minY,
+      maxX: _kDefaultMax,
+      maxY: _kDefaultMax,
+      minX: _kDefaultMin,
+      minY: _kDefaultMin,
       lineTouchData: LineTouchData(enabled: false),
       titlesData: FlTitlesData(
         show: true,
@@ -52,15 +47,16 @@ class DrawingController extends GetxController {
 
   void drawGraph(
     Equation equation, {
-    double min = -10.0,
-    double max = 10.0,
+    double min = _kDefaultMin,
+    double max = _kDefaultMax,
     double accuracy = 0.01,
   }) {
-    if (_lines.asMap().containsKey(_kEquationPlace)) _lines.removeLast();
+    if (_lines.asMap().containsKey(_kEquationPlace))
+      _lines.removeAt(_kEquationPlace);
 
-    if ((equation.min(min, max).y - chartData.minY).abs() > kCenterConst) {
+    /*if ((equation.min(min, max).y - chartData.minY).abs() > _kPaddingValue) {
       var previousMinY = chartData.minY;
-      chartData.minY = equation.min(min, max).y - kCenterConst;
+      chartData.minY = equation.min(min, max).y - _kPaddingValue;
       chartData.maxY = chartData.maxY - previousMinY;
 
       List<FlSpot> newYAxisDots = [];
@@ -69,12 +65,11 @@ class DrawingController extends GetxController {
       }
       chartData.lineBarsData[1].spots.clear();
       chartData.lineBarsData[1].spots.addAll(newYAxisDots);
-    }
+    }*/
 
     List<FlSpot> dots = [];
     for (var i = min; i < max; i += accuracy) {
-      if (equation.compute(i) < chartData.maxY &&
-          equation.compute(i) > chartData.minY) {
+      if (equation.compute(i) < gridMaxY && equation.compute(i) > gridMinY) {
         dots.add(FlSpot(i, equation.compute(i)));
       }
     }
@@ -88,50 +83,36 @@ class DrawingController extends GetxController {
     ));
   }
 
-  List<LineChartBarData> _drawAxis(
-    double minX,
-    double maxX,
-    double minY,
-    double maxY,
-  ) =>
-      [_drawAxisX(minX, maxX), _drawAxisY(minY, maxY)];
+  void _drawAxisY() =>
+      _drawAxis(kPlace: _kAxisYPlace, from: gridMinY, to: gridMaxY);
 
-  LineChartBarData _drawAxisY(
-    double minY,
-    double maxY,
-  ) {
-    List<FlSpot> dots = [];
-    for (var i = minY; i <= maxY; i++) {
-      dots.add(FlSpot(0, i));
+  void _drawAxisX() =>
+      _drawAxis(kPlace: _kAxisXPlace, from: gridMinX, to: gridMaxX);
+
+  void _drawAxis({
+    required int kPlace,
+    required double from,
+    required double to,
+  }) {
+    LineChartBarData defaultStyledAxis(List<FlSpot> dots) {
+      return LineChartBarData(
+        spots: dots,
+        colors: [Colors.black],
+        barWidth: 3,
+        dotData: FlDotData(
+          show: false,
+        ),
+      );
     }
 
-    return LineChartBarData(
-      spots: dots,
-      colors: [Colors.black],
-      barWidth: 3,
-      dotData: FlDotData(
-        show: false,
-      ),
-    );
-  }
+    if (_lines.asMap().containsKey(kPlace)) _lines.removeAt(kPlace);
 
-  LineChartBarData _drawAxisX(
-    double minX,
-    double maxX,
-  ) {
     List<FlSpot> dots = [];
-    for (var i = minX; i <= maxX; i++) {
-      dots.add(FlSpot(i, 0));
+    for (var i = from; i <= to; i++) {
+      dots.add(kPlace == _kAxisXPlace ? FlSpot(i, 0) : FlSpot(0, i));
     }
 
-    return LineChartBarData(
-      spots: dots,
-      colors: [Colors.black],
-      barWidth: 3,
-      dotData: FlDotData(
-        show: false,
-      ),
-    );
+    _lines.insert(kPlace, defaultStyledAxis(dots));
   }
 
   SideTitles _drawTitles() => SideTitles(
@@ -142,7 +123,9 @@ class DrawingController extends GetxController {
           fontWeight: FontWeight.normal,
           fontSize: 11,
         ),
-        getTitles: (value) => value.toInt().toString(),
+        getTitles: (value) {
+          return value.toInt().toString();
+        },
         margin: 8,
       );
 
@@ -162,4 +145,12 @@ class DrawingController extends GetxController {
           );
         },
       );
+
+  get gridMinX => chartData.minX;
+
+  get gridMaxX => chartData.maxX;
+
+  get gridMinY => chartData.minY;
+
+  get gridMaxY => chartData.maxY;
 }
