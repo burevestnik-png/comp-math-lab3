@@ -17,7 +17,10 @@ class OptionTextfield extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        fieldText(content, size: TextSize.SMALL),
+        SizedBox(
+          width: 100,
+          child: fieldText(content, size: TextSize.SMALL),
+        ),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),

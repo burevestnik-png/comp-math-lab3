@@ -14,10 +14,11 @@ class Options extends GetView<MainScreenState> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Equations(),
+          Divider(),
           OptionTextfield(
             content: "Left border:",
             controller: controller.aController,
-            onChange: (String value) => controller.onFieldChange(
+            onChange: (String value) => controller.onDoubleFieldChange(
               value,
               isCorrect: controller.isACorrect,
               obs: controller.a,
@@ -27,7 +28,7 @@ class Options extends GetView<MainScreenState> {
           OptionTextfield(
             content: "Right border:",
             controller: controller.bController,
-            onChange: (String value) => controller.onFieldChange(
+            onChange: (String value) => controller.onDoubleFieldChange(
               value,
               isCorrect: controller.isBCorrect,
               obs: controller.b,
@@ -37,13 +38,25 @@ class Options extends GetView<MainScreenState> {
           OptionTextfield(
             content: "Accuracy:",
             controller: controller.accuracyController,
-            onChange: (String value) => controller.onFieldChange(
+            onChange: (String value) => controller.onDoubleFieldChange(
               value,
               isCorrect: controller.isAccuracyCorrect,
               obs: controller.accuracy,
               textController: controller.accuracyController,
             ),
           ),
+          OptionTextfield(
+            content: "n:",
+            controller: controller.nController,
+            onChange: (String value) => controller.onIntFieldChange(
+              value,
+              isCorrect: controller.isNCorrect,
+              obs: controller.n,
+              textController: controller.nController,
+            ),
+          ),
+          Divider(),
+          TextButton(onPressed: () {}, child: Text('Compute')),
         ],
       ),
     );

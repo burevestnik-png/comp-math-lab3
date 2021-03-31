@@ -32,13 +32,6 @@ class MainScreen extends GetView<MainScreenState> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 LineChart(_drawingController.chartData),
-                FlatButton(
-                  onPressed: () {
-                    _drawingController.drawGraph(controller.equations[0]);
-                  },
-                  child: Obx(
-                      () => Text("${controller.currentEquation.toString()}")),
-                )
               ],
             ),
           ),

@@ -25,10 +25,12 @@ class MainScreenState extends IState {
   var a = (-5.0).obs;
   var b = 5.0.obs;
   var accuracy = 0.01.obs;
+  var n = 4.obs;
 
   final aController = TextEditingController();
   final bController = TextEditingController();
   final accuracyController = TextEditingController();
+  final nController = TextEditingController();
 
   @override
   void onInit() {
@@ -38,11 +40,12 @@ class MainScreenState extends IState {
     aController.text = a.value!.toStringAsFixed(0);
     bController.text = b.value!.toStringAsFixed(0);
     accuracyController.text = accuracy.value.toString();
+    nController.text = n.value.toString();
 
     _redraw();
   }
 
-  void onFieldChange(
+  void onDoubleFieldChange(
     String value, {
     required bool Function(double) isCorrect,
     required RxDouble obs,
@@ -60,7 +63,27 @@ class MainScreenState extends IState {
     }
 
     obs.value = parsedValue;
-    print('Redraw: a - ${a.value} b - ${b.value}');
+    _redraw();
+  }
+
+  void onIntFieldChange(
+    String value, {
+    required bool Function(int) isCorrect,
+    required RxInt obs,
+    required TextEditingController textController,
+  }) {
+    var parsedValue = int.tryParse(value);
+    if (parsedValue == null) {
+      // TODO Show toast!
+      return;
+    }
+
+    if (!isCorrect(parsedValue)) {
+      textController.text = obs.value.toString();
+      return;
+    }
+
+    obs.value = parsedValue;
     _redraw();
   }
 
@@ -69,6 +92,8 @@ class MainScreenState extends IState {
   bool isBCorrect(double value) => value > a.value!;
 
   bool isAccuracyCorrect(double value) => value >= 0.01 && value <= 1;
+
+  bool isNCorrect(int value) => value >= 1 && value <= 10;
 
   void onEquationChange(Equation value) {
     currentEquation.value = value;
