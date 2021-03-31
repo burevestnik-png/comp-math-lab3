@@ -7,23 +7,21 @@ class PolynomialToken extends Token {
   final Token _token;
   final double _power;
 
-  PolynomialToken(this._token, this._power, String sign, double factor)
-      : super(Sign(sign), factor);
+  PolynomialToken(this._token, this._power, double factor) : super(factor);
 
-  PolynomialToken.basicPositive({
+  PolynomialToken.basicPos({
     required double power,
     required double factor,
-  }) : this(LinearToken.basic(), power, Sign.plus, factor);
+  }) : this(LinearToken.basicPos(), power, factor);
 
-  PolynomialToken.basicNegative({
+  PolynomialToken.basicNeg({
     required double power,
     required double factor,
-  }) : this(LinearToken.basic(), power, Sign.minus, factor);
+  }) : this(LinearToken.basicNeg(), power, factor);
 
   @override
-  double compute(double x) =>
-      sign.apply(factor * pow(_token.compute(x), _power));
+  double compute(double x) => factor * pow(_token.compute(x), _power);
 
   @override
-  String toString() => '${sign.value}$factor * ($_token)^$_power';
+  String toString() => '${factor.withSign()} * ($_token)^$_power';
 }
