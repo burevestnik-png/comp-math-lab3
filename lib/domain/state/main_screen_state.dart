@@ -1,4 +1,5 @@
 import 'package:comp_math_lab3/domain/controllers/drawing_controller.dart';
+import 'package:comp_math_lab3/domain/models/computation_methods.dart';
 import 'package:comp_math_lab3/domain/models/equation.dart';
 import 'package:comp_math_lab3/domain/models/tokens/const_token.dart';
 import 'package:comp_math_lab3/domain/models/tokens/polynomial_token.dart';
@@ -21,6 +22,7 @@ class MainScreenState extends IState {
   ];
 
   late Rx<Equation> currentEquation;
+  Rx<ComputationMethods> method = ComputationMethods.LEFT_RECTANGLE.obs;
   var a = (-5.0).obs;
   var b = 5.0.obs;
   var accuracy = 0.01.obs;
@@ -98,6 +100,8 @@ class MainScreenState extends IState {
     currentEquation.value = value;
     _redraw();
   }
+
+  void onMethodChange(ComputationMethods value) => method.value = value;
 
   void _redraw() => _drawingController.drawGraph(
         currentEquation.value!,
