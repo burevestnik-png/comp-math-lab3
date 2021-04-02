@@ -1,11 +1,17 @@
+import 'package:comp_math_lab3/domain/controllers/log_controller.dart';
 import 'package:comp_math_lab3/domain/models/equation.dart';
+import 'package:get/get.dart';
 
 abstract class ComputationMethod {
-  void solve({
-    required Equation equation,
-    required double a,
-    required double b,
-    required double accuracy,
-    required int n,
-  });
+  final logService = Get.find<LogController>();
+
+  void solve(
+    Equation equation,
+    double a,
+    double b,
+    double accuracy,
+    int n,
+  );
+
+  double findStep(double a, double b, double n) => (b - a) / n;
 }

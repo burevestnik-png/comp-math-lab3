@@ -17,7 +17,6 @@ class ComputationController extends GetxController {
     required int n,
     required ComputationMethods method,
   }) {
-    _methods[method]!
-        .solve(equation: equation, a: a, b: b, accuracy: accuracy, n: n);
+    _methods[method]!.solve(equation, a, b, accuracy, n);
   }
 }

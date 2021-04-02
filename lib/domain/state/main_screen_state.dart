@@ -1,3 +1,4 @@
+import 'package:comp_math_lab3/domain/controllers/computation_controller.dart';
 import 'package:comp_math_lab3/domain/controllers/drawing_controller.dart';
 import 'package:comp_math_lab3/domain/controllers/log_controller.dart';
 import 'package:comp_math_lab3/domain/models/computation_methods.dart';
@@ -9,8 +10,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class MainScreenState extends IState {
-  final DrawingController _drawingController = Get.find();
-  final LogController logController = Get.find();
+  final _drawingController = Get.find<DrawingController>();
+  final _logController = Get.find<LogController>();
+  final _computationController = Get.find<ComputationController>();
+
   final equations = <Equation>[
     Equation([
       PolynomialToken.basicPos(power: 2.0, factor: 1.0),
@@ -102,6 +105,15 @@ class MainScreenState extends IState {
     currentEquation.value = value;
     _redraw();
   }
+
+  void onComputeAction() => _computationController.solve(
+        equation: currentEquation.value!,
+        a: a.value!,
+        b: b.value!,
+        accuracy: accuracy.value!,
+        n: n.value,
+        method: method.value!,
+      );
 
   void onMethodChange(ComputationMethods value) => method.value = value;
 
