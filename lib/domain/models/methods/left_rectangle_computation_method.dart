@@ -9,7 +9,5 @@ class LeftRectangleComputationMethod implements ComputationMethod {
     required double b,
     required double accuracy,
     required int n,
-  }) {
-    // TODO: implement solve
-  }
+  }) {}
 }

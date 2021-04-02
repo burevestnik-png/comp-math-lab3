@@ -1,4 +1,5 @@
 import 'package:comp_math_lab3/domain/controllers/drawing_controller.dart';
+import 'package:comp_math_lab3/domain/controllers/log_controller.dart';
 import 'package:comp_math_lab3/domain/models/computation_methods.dart';
 import 'package:comp_math_lab3/domain/models/equation.dart';
 import 'package:comp_math_lab3/domain/models/tokens/const_token.dart';
@@ -9,6 +10,7 @@ import 'package:get/get.dart';
 
 class MainScreenState extends IState {
   final DrawingController _drawingController = Get.find();
+  final LogController logController = Get.find();
   final equations = <Equation>[
     Equation([
       PolynomialToken.basicPos(power: 2.0, factor: 1.0),
@@ -22,7 +24,7 @@ class MainScreenState extends IState {
   ];
 
   late Rx<Equation> currentEquation;
-  Rx<ComputationMethods> method = ComputationMethods.LEFT_RECTANGLE.obs;
+  var method = ComputationMethods.LEFT_RECTANGLE.obs;
   var a = (-5.0).obs;
   var b = 5.0.obs;
   var accuracy = 0.01.obs;

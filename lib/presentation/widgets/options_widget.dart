@@ -3,6 +3,7 @@ import 'package:comp_math_lab3/domain/models/equation.dart';
 import 'package:comp_math_lab3/domain/state/main_screen_state.dart';
 import 'package:comp_math_lab3/presentation/styles/text_styles.dart';
 import 'package:comp_math_lab3/presentation/widgets/option_dropdown_widget.dart';
+import 'package:comp_math_lab3/presentation/widgets/option_logger_widget.dart';
 import 'package:comp_math_lab3/presentation/widgets/option_textfield_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
@@ -10,6 +11,14 @@ import 'package:get/get_state_manager/src/simple/get_view.dart';
 
 class Options extends GetView<MainScreenState> {
   _space() => SizedBox(height: 10);
+
+  _spacedDivider() => Column(
+        children: [
+          _space(),
+          Divider(),
+          _space(),
+        ],
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -75,13 +84,15 @@ class Options extends GetView<MainScreenState> {
             onChange: controller.onMethodChange,
             toStr: (method) => method.toStr(),
           ),
-          _space(),
-          Divider(),
-          _space(),
+          _spacedDivider(),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              controller.logController.println("SOSAT");
+            },
             child: Obx(() => Text(controller.method.toString())),
           ),
+          _spacedDivider(),
+          OptionLogger(),
         ],
       ),
     );
