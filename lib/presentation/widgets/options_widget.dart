@@ -6,6 +6,7 @@ import 'package:comp_math_lab3/presentation/widgets/option_dropdown_widget.dart'
 import 'package:comp_math_lab3/presentation/widgets/option_logger_widget.dart';
 import 'package:comp_math_lab3/presentation/widgets/option_textfield_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 
@@ -89,7 +90,20 @@ class Options extends GetView<MainScreenState> {
           ),
           TextButton(
             onPressed: () {
-              Get.snackbar("title", "message");
+              EasyLoading.instance
+                ..displayDuration = const Duration(milliseconds: 2000)
+                ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+                ..loadingStyle = EasyLoadingStyle.dark
+                ..indicatorSize = 45.0
+                ..radius = 10.0
+                ..progressColor = Colors.yellow
+                ..backgroundColor = Colors.green
+                ..indicatorColor = Colors.yellow
+                ..textColor = Colors.yellow
+                ..maskColor = Colors.blue.withOpacity(0.5)
+                ..userInteractions = true
+                ..dismissOnTap = false;
+              EasyLoading.showToast('Toast');
             },
             child: Text("Compute"),
           ),
