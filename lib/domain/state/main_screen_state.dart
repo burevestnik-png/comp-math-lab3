@@ -43,8 +43,8 @@ class MainScreenState extends IState {
     super.onInit();
 
     currentEquation = equations[0].obs;
-    aController.text = a.value!.toStringAsFixed(0);
-    bController.text = b.value!.toStringAsFixed(0);
+    aController.text = a.value.toStringAsFixed(0);
+    bController.text = b.value.toStringAsFixed(0);
     accuracyController.text = accuracy.value.toString();
     nController.text = n.value.toString();
 
@@ -93,9 +93,9 @@ class MainScreenState extends IState {
     _redraw();
   }
 
-  bool isACorrect(double value) => value < b.value!;
+  bool isACorrect(double value) => value < b.value;
 
-  bool isBCorrect(double value) => value > a.value!;
+  bool isBCorrect(double value) => value > a.value;
 
   bool isAccuracyCorrect(double value) => value >= 0.01 && value <= 1;
 
@@ -107,20 +107,20 @@ class MainScreenState extends IState {
   }
 
   void onComputeAction() => _computationController.solve(
-        equation: currentEquation.value!,
-        a: a.value!,
-        b: b.value!,
-        accuracy: accuracy.value!,
+        equation: currentEquation.value,
+        a: a.value,
+        b: b.value,
+        accuracy: accuracy.value,
         n: n.value,
-        method: method.value!,
+        method: method.value,
       );
 
   void onMethodChange(ComputationMethods value) => method.value = value;
 
   void _redraw() => _drawingController.drawGraph(
-        currentEquation.value!,
-        min: a.value!,
-        max: b.value!,
-        accuracy: accuracy.value!,
+        currentEquation.value,
+        min: a.value,
+        max: b.value,
+        accuracy: accuracy.value,
       );
 }

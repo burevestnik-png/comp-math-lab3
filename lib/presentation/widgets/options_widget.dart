@@ -87,6 +87,12 @@ class Options extends GetView<MainScreenState> {
             onPressed: controller.onComputeAction,
             child: Text("Compute"),
           ),
+          TextButton(
+            onPressed: () {
+              Get.snackbar("title", "message");
+            },
+            child: Text("Compute"),
+          ),
           _spacedDivider(),
           OptionLogger(),
         ],

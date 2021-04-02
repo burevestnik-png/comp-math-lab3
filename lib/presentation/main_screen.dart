@@ -28,11 +28,9 @@ class MainScreen extends GetView<MainScreenState> {
           ),
           Expanded(
             flex: 7,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                LineChart(_drawingController.chartData),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: LineChart(_drawingController.chartData),
             ),
           ),
         ],
