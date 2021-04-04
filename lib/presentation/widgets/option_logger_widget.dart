@@ -15,7 +15,7 @@ class OptionLogger extends GetView<LogController> {
         TextField(
           controller: controller.logs,
           keyboardType: TextInputType.multiline,
-          maxLines: 4,
+          maxLines: 7,
           readOnly: true,
           scrollController: controller.scrollController,
           decoration: InputDecoration(

@@ -1,5 +1,5 @@
-import 'package:comp_math_lab3/domain/models/computation_methods.dart';
 import 'package:comp_math_lab3/domain/models/equation.dart';
+import 'package:comp_math_lab3/domain/models/methods/method.dart';
 import 'package:comp_math_lab3/domain/state/main_screen_state.dart';
 import 'package:comp_math_lab3/presentation/styles/text_styles.dart';
 import 'package:comp_math_lab3/presentation/widgets/option_dropdown_widget.dart';
@@ -76,9 +76,9 @@ class Options extends GetView<MainScreenState> {
             ),
           ),
           _space(),
-          OptionDropdown<ComputationMethods>(
+          OptionDropdown<Methods>(
             text: "Method:",
-            items: ComputationMethods.values,
+            items: Methods.values,
             obs: controller.method,
             onChange: controller.onMethodChange,
             toStr: (method) => method.toStr(),
