@@ -1,4 +1,5 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:comp_math_lab3/internal/config_toast.dart';
 import 'package:comp_math_lab3/internal/dependencies.dart';
 import 'package:comp_math_lab3/presentation/main_screen.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:get/get.dart';
 void main() {
   GlobalBindings().dependencies();
   runApp(App());
+  configToast();
 }
 
 class App extends StatelessWidget {
