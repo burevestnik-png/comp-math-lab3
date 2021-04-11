@@ -28,13 +28,5 @@ abstract class Method {
     int n,
   );
 
-  double findArea(int n, double Function(int) calcCallback) {
-    var area = 0.0;
-    for (int i = 0; i < n; i++) {
-      area += calcCallback(i);
-    }
-    return area;
-  }
-
   double findStep(double a, double b, double n) => (b - a) / n;
 }

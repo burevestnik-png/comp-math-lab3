@@ -28,15 +28,23 @@ abstract class AreaCalcDependedMethod extends Method {
 
     var h = findStep(a, b, n.toDouble());
     double resultForN = 0.0;
-    double resultFor2N = findArea(n, bindedAreaCallback(h));
+    double resultFor2N = _findArea(n, bindedAreaCallback(h));
     do {
       h /= 2;
       n *= 2;
 
       resultForN = resultFor2N;
-      resultFor2N = findArea(n, bindedAreaCallback(h));
+      resultFor2N = _findArea(n, bindedAreaCallback(h));
     } while ((resultForN - resultFor2N).abs() > accuracy);
 
     logService.println("Answer is: $resultFor2N");
+  }
+
+  double _findArea(int n, double Function(int) calcCallback) {
+    var area = 0.0;
+    for (int i = 0; i < n; i++) {
+      area += calcCallback(i);
+    }
+    return area;
   }
 }
