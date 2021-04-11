@@ -6,32 +6,9 @@ class SimpsonMethod extends Method {
   SimpsonMethod() : super(Methods.SIMPSON);
 
   @override
-  void solve(
-    Equation equation,
-    double a,
-    double b,
-    double accuracy,
-    int n,
-  ) {
-    var h = findStep(a, b, n.toDouble());
-    double resultForN = 0.0;
-    double resultFor2N = _findArea(n, h, _formDots(equation, a, h, n));
-    do {
-      h /= 2;
-      n *= 2;
+  double findArea(Equation equation, double a, double h, int n) {
+    List<Pair<double, double>> dots = _formDots(equation, a, h, n);
 
-      resultForN = resultFor2N;
-      resultFor2N = _findArea(n, h, _formDots(equation, a, h, n));
-    } while ((resultForN - resultFor2N).abs() > accuracy);
-
-    logService.println("Answer is: $resultFor2N");
-  }
-
-  double _findArea(
-    int n,
-    double h,
-    List<Pair<double, double>> dots,
-  ) {
     double oddSum = 0;
     double evenSum = 0;
     for (var i = 1; i < n; i++) {

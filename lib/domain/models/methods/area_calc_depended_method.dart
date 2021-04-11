@@ -17,33 +17,11 @@ abstract class AreaCalcDependedMethod extends Method {
   ]) : super(type);
 
   @override
-  void solve(
-    Equation equation,
-    double a,
-    double b,
-    double accuracy,
-    int n,
-  ) {
-    var bindedAreaCallback = (double h) => areaCallback(h, equation, a);
-
-    var h = findStep(a, b, n.toDouble());
-    double resultForN = 0.0;
-    double resultFor2N = _findArea(n, bindedAreaCallback(h));
-    do {
-      h /= 2;
-      n *= 2;
-
-      resultForN = resultFor2N;
-      resultFor2N = _findArea(n, bindedAreaCallback(h));
-    } while ((resultForN - resultFor2N).abs() > accuracy);
-
-    logService.println("Answer is: $resultFor2N");
-  }
-
-  double _findArea(int n, double Function(int) calcCallback) {
+  double findArea(Equation equation, double a, double h, int n) {
+    var bindedAreaCallback = areaCallback(h, equation, a);
     var area = 0.0;
     for (int i = 0; i < n; i++) {
-      area += calcCallback(i);
+      area += bindedAreaCallback(i);
     }
     return area;
   }
