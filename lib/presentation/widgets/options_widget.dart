@@ -6,7 +6,6 @@ import 'package:comp_math_lab3/presentation/widgets/option_dropdown_widget.dart'
 import 'package:comp_math_lab3/presentation/widgets/option_logger_widget.dart';
 import 'package:comp_math_lab3/presentation/widgets/option_textfield_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 
@@ -86,12 +85,6 @@ class Options extends GetView<MainScreenState> {
           _spacedDivider(),
           TextButton(
             onPressed: controller.onComputeAction,
-            child: Text("Compute"),
-          ),
-          TextButton(
-            onPressed: () {
-              EasyLoading.showError('Toast');
-            },
             child: Text("Compute"),
           ),
           _spacedDivider(),
