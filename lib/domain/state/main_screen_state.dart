@@ -23,6 +23,12 @@ class MainScreenState extends IState {
       PolynomialToken.basicNeg(power: 1, factor: 3),
       ConstToken(-12),
     ]),
+    Equation([
+      PolynomialToken.basicPos(power: 5, factor: 2),
+      PolynomialToken.basicPos(power: 2, factor: 6),
+      PolynomialToken.basicNeg(power: 1, factor: 6),
+      ConstToken(-3),
+    ]),
   ];
 
   late Rx<Equation> currentEquation;
@@ -42,11 +48,23 @@ class MainScreenState extends IState {
     super.onInit();
 
     currentEquation = equations[0].obs;
+    _restoreFieldControllers();
+  }
+
+  void reset() {
+    a.value = -5.0;
+    b.value = 5.0;
+    accuracy.value = 0.01;
+    n.value = 4;
+
+    _restoreFieldControllers();
+  }
+
+  void _restoreFieldControllers() {
     aController.text = a.value.toStringAsFixed(0);
     bController.text = b.value.toStringAsFixed(0);
     accuracyController.text = accuracy.value.toString();
     nController.text = n.value.toString();
-
     _redraw();
   }
 

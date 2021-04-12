@@ -78,10 +78,20 @@ class Options extends GetView<MainScreenState> {
             onChange: controller.onMethodChange,
             toStr: (method) => method.toStr(),
           ),
-          _spacedDivider(),
-          TextButton(
-            onPressed: controller.onComputeAction,
-            child: Text("Compute"),
+          SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: controller.onComputeAction,
+                child: Text("Compute"),
+              ),
+              SizedBox(width: 30),
+              ElevatedButton(
+                onPressed: controller.reset,
+                child: Text("Reset"),
+              ),
+            ],
           ),
           _spacedDivider(),
           OptionLogger(),

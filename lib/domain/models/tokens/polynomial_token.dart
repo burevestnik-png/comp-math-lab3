@@ -12,12 +12,12 @@ class PolynomialToken extends Token {
   PolynomialToken.basicPos({
     required double power,
     required double factor,
-  }) : this(LinearToken.basicPos(), power, factor);
+  }) : this(LinearToken.basic(), power, factor);
 
   PolynomialToken.basicNeg({
     required double power,
     required double factor,
-  }) : this(LinearToken.basicNeg(), power, factor);
+  }) : this(LinearToken.basic(), power, factor * (-1));
 
   @override
   double compute(double x) => factor * pow(_token.compute(x), _power);

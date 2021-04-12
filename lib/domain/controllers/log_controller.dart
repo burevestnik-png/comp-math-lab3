@@ -12,7 +12,10 @@ class LogController extends GetxController {
         curve: SawTooth(3),
       );
 
-  void clean() => logs.clear();
+  void clean() {
+    logs.clear();
+    _index = 1;
+  }
 
   void println([String? string]) {
     logs.text = logs.text + "$prefix${string ?? ""}\n";
@@ -20,7 +23,9 @@ class LogController extends GetxController {
   }
 
   void printdln([String? string]) {
-    logs.text = logs.text + "$prefix${string ?? ""}\n\n";
+    logs.text = logs.text + "$prefix${string ?? ""}\n";
+    _index++;
+    println();
     _index++;
   }
 

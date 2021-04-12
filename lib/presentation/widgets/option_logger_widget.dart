@@ -23,15 +23,16 @@ class OptionLogger extends GetView<LogController> {
             hintText: "Here there will be computational logs...",
           ),
         ),
+        SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextButton(
+            ElevatedButton(
               onPressed: controller.scrollToBottom,
               child: Text("Scroll to bottom"),
             ),
             SizedBox(width: 30),
-            TextButton(
+            ElevatedButton(
               onPressed: controller.clean,
               child: Text("Clean"),
             ),

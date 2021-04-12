@@ -14,7 +14,7 @@ extension WithSign on double {
     if (this.sign == 1) {
       return "+$this";
     } else if (this.sign == -1) {
-      return "-$this";
+      return this.toString();
     } else
       return "$this";
   }
