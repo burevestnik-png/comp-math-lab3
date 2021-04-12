@@ -54,7 +54,7 @@ class DrawingController extends GetxController {
     if (_lines.asMap().containsKey(_kEquationPlace))
       _lines.removeAt(_kEquationPlace);
 
-    if ((equation.min(min, max).y - chartData.minY).abs() > _kPaddingValue) {
+    /*if ((equation.min(min, max).y - chartData.minY).abs() > _kPaddingValue) {
       var previousMinY = chartData.minY;
       chartData.minY = equation.min(min, max).y - _kPaddingValue;
       chartData.maxY = chartData.maxY - previousMinY;
@@ -65,7 +65,7 @@ class DrawingController extends GetxController {
       }
       chartData.lineBarsData[1].spots.clear();
       chartData.lineBarsData[1].spots.addAll(newYAxisDots);
-    }
+    }*/
 
     List<FlSpot> dots = [];
     for (var i = min; i < max; i += accuracy) {

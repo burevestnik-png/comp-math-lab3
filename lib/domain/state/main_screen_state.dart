@@ -1,17 +1,16 @@
 import 'package:comp_math_lab3/domain/controllers/computation_controller.dart';
 import 'package:comp_math_lab3/domain/controllers/drawing_controller.dart';
-import 'package:comp_math_lab3/domain/controllers/log_controller.dart';
 import 'package:comp_math_lab3/domain/models/equation.dart';
 import 'package:comp_math_lab3/domain/models/methods/method.dart';
 import 'package:comp_math_lab3/domain/models/tokens/const_token.dart';
 import 'package:comp_math_lab3/domain/models/tokens/polynomial_token.dart';
 import 'package:comp_math_lab3/domain/state/state.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
 class MainScreenState extends IState {
   final _drawingController = Get.find<DrawingController>();
-  final _logController = Get.find<LogController>();
   final _computationController = Get.find<ComputationController>();
 
   final equations = <Equation>[
@@ -53,67 +52,67 @@ class MainScreenState extends IState {
 
   void onDoubleFieldChange(
     String value, {
-    required bool Function(double) isCorrect,
     required RxDouble obs,
-    required TextEditingController textController,
   }) {
     var parsedValue = double.tryParse(value);
-    if (parsedValue == null) {
-      // TODO Show toast!
-      return;
-    }
-
-    if (!isCorrect(parsedValue)) {
-      textController.text = obs.value.toString();
-      return;
-    }
+    if (parsedValue == null) return;
 
     obs.value = parsedValue;
-    _redraw();
+    if (isBordersCorrect() && isAccuracyCorrect()) _redraw();
   }
 
   void onIntFieldChange(
     String value, {
-    required bool Function(int) isCorrect,
     required RxInt obs,
-    required TextEditingController textController,
   }) {
     var parsedValue = int.tryParse(value);
-    if (parsedValue == null) {
-      // TODO Show toast!
-      return;
-    }
-
-    if (!isCorrect(parsedValue)) {
-      textController.text = obs.value.toString();
-      return;
-    }
+    if (parsedValue == null) return;
 
     obs.value = parsedValue;
-    _redraw();
+    if (isNCorrect()) _redraw();
   }
 
-  bool isACorrect(double value) => value < b.value;
+  bool isBordersCorrect() => a.value < b.value;
 
-  bool isBCorrect(double value) => value > a.value;
+  bool isAccuracyCorrect() => accuracy.value >= 0.01 && accuracy.value <= 1;
 
-  bool isAccuracyCorrect(double value) => value >= 0.01 && value <= 1;
-
-  bool isNCorrect(int value) => value >= 1 && value <= 10;
+  bool isNCorrect() => n.value >= 1 && n.value <= 1000;
 
   void onEquationChange(Equation value) {
     currentEquation.value = value;
     _redraw();
   }
 
-  void onComputeAction() => _computationController.solve(
-        equation: currentEquation.value,
-        a: a.value,
-        b: b.value,
-        accuracy: accuracy.value,
-        n: n.value,
-        method: method.value,
-      );
+  void onComputeAction() {
+    if (!isInputFieldsCorrect()) return;
+    _computationController.solve(
+      equation: currentEquation.value,
+      a: a.value,
+      b: b.value,
+      accuracy: accuracy.value,
+      n: n.value,
+      method: method.value,
+    );
+  }
+
+  bool isInputFieldsCorrect() {
+    if (!isBordersCorrect()) {
+      EasyLoading.showError("Borders input is incorrect", dismissOnTap: true);
+      return false;
+    }
+
+    if (!isAccuracyCorrect()) {
+      EasyLoading.showError("Accuracy input is incorrect", dismissOnTap: true);
+      return false;
+    }
+
+    if (!isNCorrect()) {
+      EasyLoading.showError("n input is incorrect", dismissOnTap: true);
+      return false;
+    }
+
+    return true;
+  }
 
   void onMethodChange(Methods value) => method.value = value;
 

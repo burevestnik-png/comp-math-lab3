@@ -39,9 +39,7 @@ class Options extends GetView<MainScreenState> {
             controller: controller.aController,
             onChange: (String value) => controller.onDoubleFieldChange(
               value,
-              isCorrect: controller.isACorrect,
               obs: controller.a,
-              textController: controller.aController,
             ),
           ),
           OptionTextfield(
@@ -49,9 +47,7 @@ class Options extends GetView<MainScreenState> {
             controller: controller.bController,
             onChange: (String value) => controller.onDoubleFieldChange(
               value,
-              isCorrect: controller.isBCorrect,
               obs: controller.b,
-              textController: controller.bController,
             ),
           ),
           OptionTextfield(
@@ -59,9 +55,7 @@ class Options extends GetView<MainScreenState> {
             controller: controller.accuracyController,
             onChange: (String value) => controller.onDoubleFieldChange(
               value,
-              isCorrect: controller.isAccuracyCorrect,
               obs: controller.accuracy,
-              textController: controller.accuracyController,
             ),
           ),
           OptionTextfield(
@@ -69,9 +63,7 @@ class Options extends GetView<MainScreenState> {
             controller: controller.nController,
             onChange: (String value) => controller.onIntFieldChange(
               value,
-              isCorrect: controller.isNCorrect,
               obs: controller.n,
-              textController: controller.nController,
             ),
           ),
           _space(),
