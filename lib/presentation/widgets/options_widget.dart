@@ -36,6 +36,7 @@ class Options extends GetView<MainScreenState> {
           Divider(),
           OptionTextfield(
             content: "Left border:",
+            tooltipContent: "Should be less than b border",
             controller: controller.aController,
             onChange: (String value) => controller.onDoubleFieldChange(
               value,
@@ -44,6 +45,7 @@ class Options extends GetView<MainScreenState> {
           ),
           OptionTextfield(
             content: "Right border:",
+            tooltipContent: "Should be greater than a border",
             controller: controller.bController,
             onChange: (String value) => controller.onDoubleFieldChange(
               value,
@@ -52,6 +54,7 @@ class Options extends GetView<MainScreenState> {
           ),
           OptionTextfield(
             content: "Accuracy:",
+            tooltipContent: "Should be in [ 0.01, 1.00 ]",
             controller: controller.accuracyController,
             onChange: (String value) => controller.onDoubleFieldChange(
               value,
@@ -60,6 +63,7 @@ class Options extends GetView<MainScreenState> {
           ),
           OptionTextfield(
             content: "n:",
+            tooltipContent: "Should be in [ 1, 1000 ]",
             controller: controller.nController,
             onChange: (String value) => controller.onIntFieldChange(
               value,
